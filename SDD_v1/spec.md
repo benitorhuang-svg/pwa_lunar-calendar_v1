@@ -194,6 +194,9 @@
 - **FR-014**：所有模式相關的 UI 元素可見性必須由 CSS body-class 後代選擇器統一控制。JS 層禁止使用 `style.display` / `style.opacity` 控制模式相關可見性，避免 inline style 覆蓋 CSS 規則。
 - **FR-015**：Welcome 模式的閒置自動轉場超時必須為 6 秒，與 Artwork 模式的 15 秒閒置超時使用獨立計時器，不得共用。
 - **FR-016**：背景 click 事件 handler 必須在 handler 開頭進行模式守衛檢查，Welcome 模式下的點擊由 WelcomeOverlay 專責處理，background handler 不得攔截。
+- **FR-017** [新增]：系統必須具備背景亮度探測邏輯，在圖片切換後 100ms 內完成亮點區域分析，並動態套用 `.light-bg-mode` 或 `.dark-bg-mode` 以確保 UI 可讀性。
+- **FR-018** [新增]：系統必須根據季節主題套用差異化的排版參數（Letter-spacing/Font-weight），落實感官細節。
+- **FR-019** [新增]：模式轉換邏輯必須具備中斷保護機制，確保在快速連續操作下，動畫過渡依然保持平滑且不產生狀態衝突。
 
 ### 主要實體
 

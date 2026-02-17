@@ -219,15 +219,34 @@ lunar-calendar/
 3.  **高光邊緣 (Specular Border)**：
     *   `1px solid` 結合 `linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0.1) 100%)`。
     *   左上角較亮，模擬光線從上方投射的物理效果。
+4.  **動態陰影疊加 (Dynamic Shadow Depth)**：[新增] 在玻璃面板下方疊加極細微的 `box-shadow`，其色彩應動態取自當前背景色的深色調，模擬光影透射效果。
 
-### 2. 主題緩衝機制 (Theme Smoothing Mechanism)
+### 2. 亮度感知與環境適配 (Luminance Awareness Strategy) [新增]
 
-當色彩主題（如 Spring → Summer）或 Dock 色系（Gold ↔ Silver）切換時，必須確保陰影也同步過渡：
+為了確保 UI 在不同 4K 背景下的極致閱讀性：
 
+*   **亮度偵測邏輯**：利用不可見的 Canvas 對 Hero 底部導航區域（Dock 背景）與頂部資訊條區域進行 `getImageData` 採樣，計算平均亮度 (Luminance)。
+*   **閾值觸發**：若 Luminance > 180 (亮色背景)，自動為 body 加入 `.light-bg-mode`。
+*   **視覺補償**：在 `.light-bg-mode` 下，強制為白色文字增加 `text-shadow: 0 1px 4px rgba(0,0,0,0.4)`，並將玻璃背板的 `backdrop-filter: saturate()` 提升至 250% 以增強對比。
+
+### 3. 主題緩衝與季節字體細節 (Typography & Smoothing) [更新]
+
+當色彩主題（如 Spring → Summer）或 Dock 色系（Gold ↔ Silver）切換時：
+
+*   **季節排版細節**：
+    *   **Spring/Summer**：`letter-spacing: 0.05em`, `font-weight: 300` (輕盈感)。
+    *   **Autumn/Winter**：`letter-spacing: 0.02em`, `font-weight: 400` (凝重感)。
 *   **陰影過渡鎖**：CSS 變數應包含 `--theme-shadow` 與 `--theme-text-shadow`。
-*   **動態緩動**：在主題切換的時間軸內 (`0.6s`)，陰影的模糊半徑、擴散度與色彩必須使用與主色調一致的 `cubic-bezier(0.22, 1, 0.36, 1)` 過渡，避免陰影瞬間跳變導致的廉價感。
+*   **動態緩動**：在主題切換的時間軸內 (`0.6s`)，使用與主色調一致的 `cubic-bezier(0.22, 1, 0.36, 1)` 過渡。
 
-### 3. 背景呼吸感動畫 (Hero Background Breathing)
+### 4. 語意化轉場時長與中斷保護 (Transition Strategy) [新增]
+
+*   **轉場時長策略**：
+    *   **重大切換 (Welcome → App)**：1.6s (極緻儀式感)。
+    *   **導航切換 (Month/Image Change)**：0.6s - 0.8s (兼顧流暢與直覺)。
+*   **中斷保護 (Interruption Safety)**：實作「Transition Chaining」機制。若在 A 動畫執行中觸發 B，系統不執行硬切換，而是將 B 請求排入 `Transition Lock` 佇列，待 A 動畫之 CSS `transitionend` 觸發後再啟動 B，確保視覺的連續性。
+
+### 5. 背景呼吸感動畫 (Hero Background Breathing)
 
 為了讓背景不僅僅是一張圖片，HeroBackground 必須實作無感知循環動畫：
 

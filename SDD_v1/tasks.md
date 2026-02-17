@@ -197,7 +197,20 @@
 - [ ] T218 [US*] 實作背景呼吸動畫：在 `src/styles/hero.css` 中為 `.hero-background` 內部容器新增 60s 循環之 `scale(1.0) → scale(1.06)` 動畫。
 - [ ] T219 [US3] 實作 Zen 模式首次引導 UI：建立 `localStorage` 檢查邏輯，僅在首次進入顯示 `#zenHint` 並執行 4.5s 淡出動畫。
 
-**檢查點**：狀態機核心重構完成——所有模式轉換使用原子 class 替換、四階段生命週期、轉移鎖、三域計時器。Fullscreen 邏輯整合至生命週期。階層化玻璃態與背景呼吸感已實作。
+### 1.5M — 環境感知與高級交互 [新增]
+
+- [ ] T220 [US*] 實作轉換中斷保護機制：在 `eventOrchestrator.ts` 佇列處理邏輯中，加入對 `transitionend` 的監聽，確保動畫完成後才執行下一個模式轉換，避免狀態跳變。
+  - 依據：plan.md §4 中斷保護
+- [ ] T221 [US3] 實作背景亮度探測器 (Luminance Detector)：
+  - 在 `imageManager.ts` 中新增 Canvas 採樣邏輯，計算底部 Dock 區域亮度。
+  - 觸發 `luminance-changed` 事件，由 `ModeUIManager` 統一管理 body class 切換。
+  - 依據：plan.md §2 亮度感知
+- [ ] T222 [US5] 實作季節排版細節 (Seasonal Typography)：在各季節主題 CSS 中，自定義排版變數（`--theme-letter-spacing`, `--theme-font-weight`）。
+  - 依據：plan.md §3 季節排版細節
+- [ ] T223 [US1] 實作歡迎卡片 Hover 互動：在 `IdleManager` 的 `welcomeTimer` 邏輯中，監聽歡迎卡片的 `mouseenter` 與 `mouseleave`，暫停/恢復進入 Zen 模式的計時。
+  - 依據：由審閱建議新增
+
+**檢查點**：狀態機核心重構與高級感優化完成。
 
 ---
 

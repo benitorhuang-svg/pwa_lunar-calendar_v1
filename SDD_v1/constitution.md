@@ -13,6 +13,9 @@
 - 互動層面：動畫遵循「彈性物理」曲線，而非線性運動。轉場節奏追求「禪意律動」。
   - **主題緩衝 (Theme Smoothing)**：主題切換時，`box-shadow` 與 `text-shadow` 必須同步緩動，確保視覺過渡平滑。
 - 材質層面：善用玻璃擬態、微發光、極簡邊框，營造深度層次。
+- **環境感知 (Environment Awareness)**：
+  - **亮度感知 (Luminance Sensing)**：系統需具備對背景圖亮度的感知能力。若背景過亮，自動調整 UI 陰影強度或降低背板透明度，確保閱讀性。
+  - **季節感官細節 (Seasonal Typography)**：根據季節微調字體間距 (Letter-spacing) 與字重，春夏季追求輕盈通透，秋冬季追求凝重溫暖。
 
 ### II. 模組化與職責分離 (Modular SoC Architecture)
 
