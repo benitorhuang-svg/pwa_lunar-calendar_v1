@@ -1,0 +1,130 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="農民曆 PWA — 沉浸式時間藝術品">
+    <main id="appContainer">
+        <div id="loadingOverlay" class="loading-overlay">
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <div class="loading-text">資源載入中...</div>
+        </div>
+
+        <div id="heroBackground" class="hero-background">
+            <!-- Background images will be managed by JS -->
+        </div>
+
+        <div id="welcomeOverlay" class="welcome-overlay">
+            <div class="welcome-card glass-card">
+                <div class="card-content">
+                    <h1 class="card-title">萬年曆</h1>
+                    <p class="card-date">乙巳年 正月 廿一</p>
+                    <div class="card-divider"></div>
+                    <p class="card-quote">「時間是流動的藝術。」</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Other components will be added later -->
+    </main>
+</Layout>
+
+<style>
+    .loading-overlay {
+        position: fixed;
+        inset: 0;
+        background: #000;
+        z-index: 10000;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition: opacity 2.2s ease;
+    }
+
+    .progress-container {
+        width: 200px;
+        height: 2px;
+        background: rgba(255, 255, 255, 0.1);
+        margin-bottom: 20px;
+    }
+
+    .progress-bar {
+        width: 0%;
+        height: 100%;
+        background: var(--hex-gold);
+        transition: width 0.3s ease;
+    }
+
+    .loading-text {
+        font-size: 0.8rem;
+        letter-spacing: 0.2em;
+        color: rgba(255, 255, 255, 0.5);
+    }
+
+    .hero-background {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        background-size: cover;
+        background-position: center;
+        transition:
+            transform 1.6s cubic-bezier(0.2, 0.8, 0.2, 1),
+            opacity 1.6s ease;
+    }
+
+    .welcome-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 100005;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: none;
+        opacity: 0;
+        animation: fadeInWelcome 2.2s forwards 0.5s;
+    }
+
+    .welcome-card {
+        padding: 3rem;
+        text-align: center;
+        min-width: 320px;
+    }
+
+    .card-title {
+        font-family: "Playfair Display", serif;
+        font-size: 3rem;
+        margin: 0;
+        letter-spacing: 0.1em;
+    }
+
+    .card-date {
+        font-size: 1.2rem;
+        margin-top: 1rem;
+        color: var(--hex-gold);
+    }
+
+    .card-divider {
+        width: 40px;
+        height: 1px;
+        background: rgba(255, 255, 255, 0.3);
+        margin: 2rem auto;
+    }
+
+    .card-quote {
+        font-style: italic;
+        opacity: 0.7;
+    }
+
+    @keyframes fadeInWelcome {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
